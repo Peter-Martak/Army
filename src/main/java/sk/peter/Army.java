@@ -1,5 +1,7 @@
 package sk.peter;
 
+import sk.peter.actions.Attackable;
+import sk.peter.actions.Defensible;
 import sk.peter.soldiers.*;
 
 import java.util.ArrayList;
@@ -41,10 +43,9 @@ public class Army {
     public void attack() {
         System.out.println("--------ATTACK--------");
         for (Soldier soldier : this.soldiers) {
-            if (isOffensive(soldier)) {
-                soldier.attack();
+            if (soldier instanceof Attackable){
+                ((Attackable) soldier).attack();
             }
-
         }
         System.out.println();
         System.out.println();
@@ -53,8 +54,8 @@ public class Army {
     public void defend() {
         System.out.println("--------DEFEND--------");
         for (Soldier soldier : this.soldiers) {
-            if (isDefensive(soldier)) {
-                soldier.defend();
+            if (soldier instanceof Defensible){
+                ((Defensible) soldier).defend();
             }
         }
         System.out.println();
@@ -64,8 +65,8 @@ public class Army {
     public void specialAttack() {
         System.out.println("--------FURY ATTACK--------");
         for (Soldier soldier : this.soldiers) {
-            if (isOffensive(soldier)) {
-                soldier.specialAttack();
+            if (soldier instanceof Attackable){
+                ((Attackable) soldier).specialAttack();
             }
         }
         System.out.println();
@@ -75,8 +76,8 @@ public class Army {
     public void specialDefend() {
         System.out.println("--------Fire Defend--------");
         for (Soldier soldier : this.soldiers) {
-            if (isDefensive(soldier)) {
-                soldier.specialDefend();
+            if (soldier instanceof Defensible){
+                ((Defensible) soldier).specialDefend();
             }
         }
         System.out.println();
@@ -89,23 +90,5 @@ public class Army {
             if (soldier instanceof Knight)
                 ((Knight) soldier).flankAttack();
         }
-    }
-
-    private boolean isOffensive(Soldier soldier) {
-        boolean isOffensive = false;
-        if (soldier.getSoldierType().toString().equals("OFFENSIVE")
-                || soldier.getSoldierType().toString().equals("ADAPTABLE")) {
-            isOffensive = true;
-        }
-        return isOffensive;
-    }
-
-    private boolean isDefensive(Soldier soldier) {
-        boolean isDefensive = false;
-        if (soldier.getSoldierType().toString().equals("DEFENSIVE")
-                || soldier.getSoldierType().toString().equals("ADAPTABLE")) {
-            isDefensive = true;
-        }
-        return isDefensive;
     }
 }
